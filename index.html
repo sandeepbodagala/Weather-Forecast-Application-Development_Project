@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags for seo purposes -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather Forecast Application using pure javascript without using any libraries.">
+    <!--favicon can be used for SEO-->
+    <link rel="icon" href="src/assets/favicon.jpg" type="image/x-icon">
+    <title>Weather Forecast Application</title>
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+</head>
+
+<!-- Body -->
+<body class="bg-cover bg-fixed bg-no-repeat" style="background-image: url('src/assets/partlycloudy.jpg');">
+    <header class="bg-gray-800 py-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex-shrink-0 ml-4 md:ml-8">
+                <img src="src/assets/wheather.jpg" alt="Logo" class="h-12 md:h-16 w-auto">
+            </div>
+            <div class="flex-grow">
+                <div class="text-center md:mr-24">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white max-[400px]:text-2xl">Weather Forecast
+                    </h1>
+                </div>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none mr-4"></button>
+        </div>
+    </header>
+
+    <!-- main section -->
+    <main class="min-h-screen flex flex-col items-center p-4" id="main">
+        <h1 class="text-4xl font-bold text-white mb-8 mt-8 text-center drop-shadow-lg">Get Weather</h1>
+        <div
+            class="bg-white/10 backdrop-blur-lg rounded-lg p-6 sm:p-8 w-full sm:w-96 border border-white/30 mb-4 sm:mb-8">
+            <div class="flex items-center mb-4">
+                <input type="text" placeholder="Search for cities" id="input"
+                    class="flex-grow bg-transparent border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:border-blue-500 text-white placeholder-gray-400 transition-colors duration-300 hover:bg-gray-800 hover:border-pink-500">
+                <button id="searchButton"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md px-4 py-2.5 focus:outline-none h-full">
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <div class="text-center mb-4 text-white">
+            </div>
+        </div>
+       ---------------or-----------------
+        <!-- current location  -->
+        <div>
+             <button id="locationButton"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 focus:outline-none">
+                Use Current Location
+            </button>
+        </div><br>
+
+        <!-- Recent Searches Dropdown -->
+        <div class="relative w-full sm:w-96 my-1">
+            <select id="recentSearches" class="w-full bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none">
+                <option value="" disabled selected>Recently Searched Cities</option>
+            </select>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" style="display: none;">
+            <div class="spinner"></div>
+        </div> 
+
+        <div class="flex flex-col sm:flex-row px-8 gap-6" id="resp">
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+                <button id="extendedForecastBtn"
+                    class="mt-6 bg-blue-500/80 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:scale-105">
+                    See Extended Forecast
+                </button>
+            </div>
+
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+            </div>
+
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+            </div>
+
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+            </div>
+
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+            </div>
+
+            <div id="weatherContainer"
+                class="max-w-3xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-lg rounded-lg border border-white/30 text-center shadow-lg text-white transition-all duration-300 hover:bg-white/20">
+                <h2 id="weatherDate" class="text-xl font-semibold drop-shadow-md"></h2>
+                <img id="weatherIcon" src="src/assets/sunny.jpg" alt="Weather Icon" class="mx-auto w-24 my-4 drop-shadow-md">
+                <p id="weather" class="text-4xl font-bold drop-shadow-md"></p>
+                <div id="weatherDetails" class="text-lg text-gray-300 text-left"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-1">
+        <p>&copy; Weather Forecast Application. All rights reserved.</p>
+        <div class="flex justify-center gap-4 mt-2">
+            <a href="https://www.linkedin.com/in/b-sandeep-kumar-331b99226" target="_blank" 
+               class="text-gray-300 hover:text-orange-400 text-2xl">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" 
+               class="text-gray-300 hover:text-orange-400 text-2xl">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- javascript -->
+    <script src="index.js"></script>
+</body>
+
+</html>
